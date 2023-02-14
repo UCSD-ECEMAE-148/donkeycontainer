@@ -23,3 +23,6 @@ services:
       - ~/.Xauthority:/root/.Xauthority
       - ./mycar:/donkeycar/mycar
       - /dev/bus/usb:/dev/bus/usb
+    build:
+      context: .
+      dockerfile: Dockerfile
