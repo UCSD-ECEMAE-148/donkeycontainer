@@ -2,7 +2,7 @@ version: '2.4'
 
 services:
   ucsd_donkeycar_framework:
-    image: mdlopezme/ucsdrobocar:staging
+    image: mdlopezme/ucsdrobocar:jetson
     container_name: donkey_framework
     stdin_open: true
     tty: true
