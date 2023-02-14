@@ -1,0 +1,25 @@
+version: '2.4'
+
+services:
+  ucsd_donkeycar_framework:
+    image: mdlopezme/ucsdrobocar:staging
+    container_name: donkey_framework
+    stdin_open: true
+    tty: true
+    privileged: true
+    network_mode: host
+    restart: unless-stopped
+    runtime: nvidia
+    device_cgroup_rules:
+      - 'c 189:* rmw'
+    ports:
+      - "5000:5000"
+    devices:
+      - /dev/video0:/dev/video0
+    environment:
+      DISPLAY: $DISPLAY
+    volumes:
+      - /tmp/.X11-unix/:/tmp/.X11-unix
+      - ~/.Xauthority:/root/.Xauthority
+      - ./mycar:/donkeycar/mycar
+      - /dev/bus/usb:/dev/bus/usb
