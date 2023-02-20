@@ -131,7 +131,7 @@ RUN git clone https://github.com/UCSD-ECEMAE-148/donkeycar.git && \
 
 ################ POINTONENAV #################
 RUN --mount=type=ssh \
-    git clone https://github.com/UCSD-ECEMAE-148/p1_runner.git
+    git clone git@github.com:UCSD-ECEMAE-148/p1_runner.git
 RUN cd p1_runner && pip3 install -e .
 
 RUN pip3 install -U --no-cache install seaborn
