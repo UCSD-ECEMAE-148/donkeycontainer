@@ -65,9 +65,9 @@ RUN apt-get -y update && \
     libopenblas-dev && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
-RUN python3 -m pip install --upgrade pip; python3 -m pip install aiohttp numpy=='1.19.4' \
-    scipy=='1.5.3' export "LD_LIBRARY_PATH=/usr/lib/llvm-8/lib:$LD_LIBRARY_PATH";\
-    python3 -m pip install --upgrade protobuf; python3 -m pip install --no-cache $TORCH_INSTALL
+RUN python3 -m pip install --upgrade pip && python3 -m pip install aiohttp numpy=='1.19.4' \
+    scipy=='1.5.3'&& export "LD_LIBRARY_PATH=/usr/lib/llvm-8/lib:$LD_LIBRARY_PATH" &&\
+    python3 -m pip install --upgrade protobuf && python3 -m pip install --no-cache $TORCH_INSTALL
 
 ######### Tensorflow for Jetpack #########
 RUN apt update && apt install -y libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran python3-h5py && \
@@ -120,8 +120,8 @@ RUN git clone https://github.com/luxonis/depthai.git && \
     python3 install_requirements.py && \
     cd ../depthai-python/examples && \
     python3 install_requirements.py 
-RUN echo "export OPENBLAS_CORETYPE=ARMV8" >> ~/.bashrc
-RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | tee /etc/udev/rules.d/80-movidius.rules
+# RUN echo "export OPENBLAS_CORETYPE=ARMV8" >> ~/.bashrc
+# RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | tee /etc/udev/rules.d/80-movidius.rules
 
 ################ DONKEYCAR ##################
 RUN git clone https://github.com/UCSD-ECEMAE-148/donkeycar.git && \
@@ -130,8 +130,9 @@ RUN git clone https://github.com/UCSD-ECEMAE-148/donkeycar.git && \
 
 
 ################ POINTONENAV #################
-RUN mkdir -p ~/.ssh && \
-    ssh-keyscan github.com >> ~/.ssh/known_hosts
+# RUN echo "his"
+# RUN mkdir -p ~/.ssh && \
+#     ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 RUN --mount=type=ssh \
     git clone git@github.com:UCSD-ECEMAE-148/p1_runner.git
