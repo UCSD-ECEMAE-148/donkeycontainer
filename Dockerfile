@@ -136,6 +136,7 @@ RUN cd p1_runner && pip3 install -e .
 
 RUN pip3 install -U --no-cache install seaborn
 
-############### FINAL ##################
-WORKDIR /projects/mycar
+################ FINAL ##################
+#COPY ./mycar /projects/donkeycar/mycar 
+#WORKDIR /projects/donkeycar/mycar
 CMD ["/bin/bash"]
