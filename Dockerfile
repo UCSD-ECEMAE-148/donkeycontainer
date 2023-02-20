@@ -130,9 +130,9 @@ RUN git clone https://github.com/UCSD-ECEMAE-148/donkeycar.git && \
 
 
 ################ POINTONENAV #################
-# RUN echo "his"
-# RUN mkdir -p ~/.ssh && \
-#     ssh-keyscan github.com >> ~/.ssh/known_hosts
+RUN echo "his"
+RUN mkdir -p ~/.ssh && \
+    ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 RUN --mount=type=ssh \
     git clone git@github.com:UCSD-ECEMAE-148/p1_runner.git
