@@ -39,6 +39,11 @@ jobs:
       
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
+        
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
