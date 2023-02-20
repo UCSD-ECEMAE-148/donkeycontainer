@@ -130,7 +130,7 @@ RUN apt update && apt install -y git curl
 
 
 ################ POINTONENAV #################
-RUN mkdir -p ~/.ssh \ &&
+RUN mkdir -p ~/.ssh && \
     ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 RUN --mount=type=ssh \
