@@ -130,6 +130,9 @@ RUN apt update && apt install -y git curl
 
 
 ################ POINTONENAV #################
+RUN mkdir -p ~/.ssh \ &&
+    ssh-keyscan github.com >> ~/.ssh/known_hosts
+
 RUN --mount=type=ssh \
     git clone git@github.com:UCSD-ECEMAE-148/p1_runner.git
 # RUN cd p1_runner && pip3 install -e .
