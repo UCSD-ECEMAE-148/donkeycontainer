@@ -65,6 +65,6 @@ RUN git clone https://github.com/UCSD-ECEMAE-148/donkeycar.git && \
     pip3 install -U --no-cache install -e .[pc]
 
 ################ FINAL ##################
-COPY ./mycar /projects/donkeycar/mycar 
-WORKDIR /projects/donkeycar/mycar
+#COPY ./mycar /projects/donkeycar/mycar 
+#WORKDIR /projects/donkeycar/mycar
 CMD ["/bin/bash"]
