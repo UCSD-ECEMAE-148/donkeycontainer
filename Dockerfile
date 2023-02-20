@@ -3,7 +3,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG DEBIAN_FRONTEND=noninteractive
 
 ######### JETPACK FOR JETSON #########
-Install any utils needed for execution
+# Install any utils needed for execution
 RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo \
     && rm -rf /var/lib/apt/lists/* \
