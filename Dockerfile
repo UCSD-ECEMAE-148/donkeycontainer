@@ -116,7 +116,7 @@ RUN git clone https://github.com/luxonis/depthai.git && \
 # RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | tee /etc/udev/rules.d/80-movidius.rules
 
 ################ DONKEYCAR ##################
-RUN git clone https://github.com/UCSD-ECEMAE-148/donkeycar.git && \
+RUN git clone https://github.com/UCSD-ECEMAE-148/donkeycar.git -b dev && \
     cd donkeycar && \
     pip3 install -U --no-cache install -e .[nano]
 
@@ -129,7 +129,6 @@ RUN pip3 install --no-cache install -U numpy==1.21.1 future==0.18.2 mock==3.0.5 
 RUN pip3 install -U --no-cache install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v502 tensorflow==2.9.1+nv22.7
 
 ################ POINTONENAV #################
-RUN echo "his"
 RUN mkdir -p ~/.ssh && \
     ssh-keyscan github.com >> ~/.ssh/known_hosts
 
