@@ -4,13 +4,12 @@ docker build \
     -f Dockerfile \
     --ssh=default \
     . 
-
-
+docker stop donkey_framework
+docker rm donkey_framework
 docker run \
     --name donkey_framework\
     -it \
     -d \
-    -rm \
     --privileged \
     --net=host \
     -e DISPLAY=$DISPLAY \

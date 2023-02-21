@@ -69,14 +69,6 @@ RUN python3 -m pip install --upgrade pip && python3 -m pip install aiohttp numpy
     scipy=='1.5.3'&& export "LD_LIBRARY_PATH=/usr/lib/llvm-8/lib:$LD_LIBRARY_PATH" &&\
     python3 -m pip install --upgrade protobuf && python3 -m pip install --no-cache $TORCH_INSTALL
 
-######### Tensorflow for Jetpack #########
-RUN apt update && apt install -y libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran python3-h5py && \
-    apt clean && \
-    rm -rf /var/lib/apt/lists/*
-RUN pip3 install --no-cache install -U testresources setuptools==65.5.0
-RUN pip3 install --no-cache install -U numpy==1.21.1 future==0.18.2 mock==3.0.5 keras_preprocessing==1.1.2 keras_applications==1.0.8 gast==0.4.0 protobuf pybind11 cython pkgconfig packaging h5py==3.6.0
-RUN pip3 install -U --no-cache install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v502 tensorflow==2.9.1+nv22.7
-
 # ######## DONKEYCAR FRAMEWORK ############
 # RUN echo "alias python=python3" >> ~/.bashrc
 # RUN apt update && apt -y install --no-install-recommends \
@@ -128,6 +120,13 @@ RUN git clone https://github.com/UCSD-ECEMAE-148/donkeycar.git && \
     cd donkeycar && \
     pip3 install -U --no-cache install -e .[nano]
 
+######### Tensorflow for Jetpack #########
+RUN apt update && apt install -y libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran python3-h5py && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
+RUN pip3 install --no-cache install -U testresources setuptools==65.5.0
+RUN pip3 install --no-cache install -U numpy==1.21.1 future==0.18.2 mock==3.0.5 keras_preprocessing==1.1.2 keras_applications==1.0.8 gast==0.4.0 protobuf pybind11 cython pkgconfig packaging h5py==3.6.0
+RUN pip3 install -U --no-cache install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v502 tensorflow==2.9.1+nv22.7
 
 ################ POINTONENAV #################
 RUN echo "his"
@@ -138,9 +137,10 @@ RUN --mount=type=ssh \
     git clone git@github.com:UCSD-ECEMAE-148/p1_runner.git
 RUN cd p1_runner && pip3 install -e .
 
+################ DATA SCIENCE TOOLS ################
 RUN pip3 install -U --no-cache install seaborn
 
 ################ FINAL ##################
 #COPY ./mycar /projects/donkeycar/mycar 
-#WORKDIR /projects/donkeycar/mycar
+WORKDIR /projects/donkeycar/mycar
 CMD ["/bin/bash"]
