@@ -143,5 +143,5 @@ RUN pip3 install -U --no-cache install seaborn
 ################ FINAL ##################
 #COPY ./mycar /projects/donkeycar/mycar 
 RUN echo "alias python=python3" >> ~/.bashrc
-WORKDIR /projects/donkeycar/mycar
+WORKDIR /projects/mycar
 CMD ["/bin/bash"]
