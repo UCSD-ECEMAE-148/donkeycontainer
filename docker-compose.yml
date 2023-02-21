@@ -6,7 +6,6 @@ services:
     container_name: donkey_framework
     stdin_open: true
     tty: true
-    container_name: donkey_framework
     privileged: true
     network_mode: host
     restart: unless-stopped
