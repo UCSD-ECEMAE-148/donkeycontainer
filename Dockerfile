@@ -138,6 +138,9 @@ RUN cd p1_runner && pip3 install -e .
 
 ################ DATA SCIENCE TOOLS ################
 RUN pip3 install -U --no-cache install seaborn
+RUN apt update && apt install nano \
+    && apt clean \
+     && rm -rf /var/lib/apt/lists/*
 
 ################ FINAL ##################
 #COPY ./mycar /projects/donkeycar/mycar 
