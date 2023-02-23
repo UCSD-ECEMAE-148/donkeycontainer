@@ -72,31 +72,32 @@ RUN python3 -m pip install --upgrade pip && python3 -m pip install aiohttp numpy
 ######## DONKEYCAR FRAMEWORK ############
 RUN echo "alias python=python3" >> ~/.bashrc
 RUN apt update && apt -y install --no-install-recommends \
-#   ca-certificates \
-#   software-properties-common \
-#   build-essential \
-#   sudo \
   git \
+  vim \
+  nano \
+  curl \
+  jstest-gtk \
+  x11-apps \
+  && apt clean \
+  && rm -rf /var/lib/apt/lists/*
+
 #   udev \
 #   python3-pip \
 #   python3-setuptools \
-  vim \
-  nano \
+#   unzip \
+#   ca-certificates \
+#   wget \
 #   net-tools \
 #   rsync \
 #   zip \
 #   htop \
-  curl \
-#   wget \
 #   iputils-ping \
 #   ffmpeg \
 #   libsm6 \
 #   libxext6 \
-  jstest-gtk \
-  x11-apps \
-#   unzip \
-  && apt clean \
-  && rm -rf /var/lib/apt/lists/*
+#   software-properties-common \
+#   build-essential \
+#   sudo \
 
 ################ PYVESC ##################
 RUN pip3 install --no-cache git+https://github.com/UCSD-ECEMAE-148/PyVESC.git@master
