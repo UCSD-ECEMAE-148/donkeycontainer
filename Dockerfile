@@ -69,37 +69,36 @@ RUN python3 -m pip install --upgrade pip && python3 -m pip install aiohttp numpy
     scipy=='1.5.3'&& export "LD_LIBRARY_PATH=/usr/lib/llvm-8/lib:$LD_LIBRARY_PATH" &&\
     python3 -m pip install --upgrade protobuf && python3 -m pip install --no-cache $TORCH_INSTALL
 
-# ######## DONKEYCAR FRAMEWORK ############
-# RUN echo "alias python=python3" >> ~/.bashrc
-# RUN apt update && apt -y install --no-install-recommends \
+######## DONKEYCAR FRAMEWORK ############
+RUN echo "alias python=python3" >> ~/.bashrc
+RUN apt update && apt -y install --no-install-recommends \
 #   ca-certificates \
 #   software-properties-common \
 #   build-essential \
 #   sudo \
-#   git \
+  git \
 #   udev \
 #   python3-pip \
 #   python3-setuptools \
-#   vim \
-#   nano \
+  vim \
+  nano \
 #   net-tools \
 #   rsync \
 #   zip \
 #   htop \
-#   curl \
+  curl \
 #   wget \
 #   iputils-ping \
 #   ffmpeg \
 #   libsm6 \
 #   libxext6 \
-#   jstest-gtk \
-#   x11-apps \
+  jstest-gtk \
+  x11-apps \
 #   unzip \
-#   && apt clean \
-#   && rm -rf /var/lib/apt/lists/*
+  && apt clean \
+  && rm -rf /var/lib/apt/lists/*
 
 ################ PYVESC ##################
-RUN apt update && apt install -y git curl
 RUN pip3 install --no-cache git+https://github.com/UCSD-ECEMAE-148/PyVESC.git@master
 
 
@@ -116,7 +115,7 @@ RUN git clone https://github.com/luxonis/depthai.git && \
 # RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | tee /etc/udev/rules.d/80-movidius.rules
 
 ################ DONKEYCAR ##################
-RUN git clone https://github.com/UCSD-ECEMAE-148/donkeycar.git -b dev && \
+RUN git clone https://github.com/UCSD-ECEMAE-148/donkeycar.git -b main && \
     cd donkeycar && \
     pip3 install -U --no-cache install -e .[nano]
 
@@ -138,9 +137,11 @@ RUN cd p1_runner && pip3 install -e .
 
 ################ DATA SCIENCE TOOLS ################
 RUN pip3 install -U --no-cache install seaborn
+RUN apt update && apt install nano \
+    && apt clean \
+     && rm -rf /var/lib/apt/lists/*
 
 ################ FINAL ##################
 #COPY ./mycar /projects/donkeycar/mycar 
-RUN echo "alias python=python3" >> ~/.bashrc
 WORKDIR /projects/mycar
 CMD ["/bin/bash"]
