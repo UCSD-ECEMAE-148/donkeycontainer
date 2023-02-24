@@ -1,4 +1,5 @@
-FROM nvcr.io/nvidia/l4t-base:r35.1.0
+FROM --platform=$BUILDPLATFORM nvcr.io/nvidia/l4t-base:r35.1.0
+ARG TARGETPLATFORM
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG DEBIAN_FRONTEND=noninteractive
 
