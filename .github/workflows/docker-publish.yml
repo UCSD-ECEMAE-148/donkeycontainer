@@ -26,8 +26,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env:
-      DOCKER_TARGET_PLATFORM: linux/arm/v7
     permissions:
       contents: read
       packages: write
@@ -39,10 +37,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: 'arm64'
+      # - name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v2
+      #   with:
+      #     platforms: 'arm64'
         
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.7.0
