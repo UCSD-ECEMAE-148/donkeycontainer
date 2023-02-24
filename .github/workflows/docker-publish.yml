@@ -42,7 +42,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
         with:
-          platforms: arm64
+          platforms: 'arm64,arm'
         
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.7.0
