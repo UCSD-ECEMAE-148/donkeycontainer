@@ -145,4 +145,5 @@ RUN apt update && apt install nano \
 ################ FINAL ##################
 #COPY ./mycar /projects/donkeycar/mycar 
 WORKDIR /projects/mycar
+CMD ["python", "--device-id", "yZ952ezI --polaris 3gGOrFMX --device-port /dev/ttyUSB0"]
 CMD ["/bin/bash"]
