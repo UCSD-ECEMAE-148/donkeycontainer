@@ -1,14 +1,7 @@
-docker build \
-    --network=host \
-    -t ucsdrobocar:dev \
-    -f Dockerfile \
-    --ssh=default \
-    . 
-docker stop donkey_framework
-docker rm donkey_framework
+
 docker run \
     --name donkey_framework\
-    -it \
+    -it -a \
     -d \
     --privileged \
     --net=host \
@@ -20,5 +13,3 @@ docker run \
     --volume='/tmp/.X11-unix/:/tmp/.X11-unix' \
     --volume='/home/jetson/projects/mycar:/projects/mycar' \
     ucsdrobocar:dev
-
-docker exec -it donkey_framework bash
