@@ -1,8 +1,8 @@
 
 docker run \
     --name donkey_framework\
-    -it -a \
-    -d \
+    -it\
+    --rm \
     --privileged \
     --net=host \
     -e DISPLAY=$DISPLAY \
@@ -12,4 +12,4 @@ docker run \
     --volume='/home/jetson/.Xauthority:/ root/.Xauthority:rw' \
     --volume='/tmp/.X11-unix/:/tmp/.X11-unix' \
     --volume='/home/jetson/projects/mycar:/projects/mycar' \
-    ucsdrobocar:dev
+    mdlopezme/ucsdrobocar:arm64
