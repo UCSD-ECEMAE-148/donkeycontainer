@@ -1,1 +1,1 @@
-docker buildx build --tag mdlopezme/ucsdrobocar:arm64 --output type=docker --platform linux/arm64/v8 .
+docker buildx build --tag mdlopezme/ucsdrobocar:arm64 --ssh /tmp/ssh-XXXXXXSygogv/agent.1173 --output type=docker --platform linux/arm64/v8 .
