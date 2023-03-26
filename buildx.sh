@@ -1,1 +1,2 @@
-docker buildx build --tag mdlopezme/ucsdrobocar:arm64 --output type=docker --file Dockerfile --platform linux/arm64/v8 .
+docker buildx build --tag jetpack --output type=docker --file Dockerfile.jetpack --platform linux/arm64/v8 .
+docker buildx build --tag buildcv2 --output type=docker --file Dockerfile.cv2 --platform linux/arm64/v8 .
