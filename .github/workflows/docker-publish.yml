@@ -87,7 +87,7 @@ jobs:
         with:
           context: .
           platforms: linux/arm64/v8
-          dokerfile: Dockerfile.jetpack
+          file: Dockerfile.jetpack
           push: ${{ github.event_name != 'pull_request' }}
           tags: jetpack
           cache-from: type=gha
