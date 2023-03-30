@@ -86,10 +86,11 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: linux/arm64/v8
-          file: Dockerfile.jetpack
           push: ${{ github.event_name != 'pull_request' }}
-          tags: jetpack
+          tags: ${{ steps.meta.outputs.tags }}
+          platforms: linux/arm64/v8
+          labels: ${{ steps.meta.outputs.labels }}
+          file: Dockerfile.jetpack
           cache-from: type=gha
           cache-to: type=gha,mode=max
           
