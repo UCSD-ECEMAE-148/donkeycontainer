@@ -79,37 +79,37 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      # Build and push Docker image with Buildx (don't push on PR)
-      # https://github.com/docker/build-push-action
-      - name: Build Docker image jetpack
-        id: build-jetpack
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ghcr.io/ucsd-ecemae-148/donkeycontainer:jetpack
-          platforms: linux/arm64/v8
-          labels: ${{ steps.meta.outputs.labels }}
-          file: Dockerfile.jetpack
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+      # # Build and push Docker image with Buildx (don't push on PR)
+      # # https://github.com/docker/build-push-action
+      # - name: Build Docker image jetpack
+      #   id: build-jetpack
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     context: .
+      #     push: ${{ github.event_name != 'pull_request' }}
+      #     tags: ghcr.io/ucsd-ecemae-148/donkeycontainer:jetpack
+      #     platforms: linux/arm64/v8
+      #     labels: ${{ steps.meta.outputs.labels }}
+      #     file: Dockerfile.jetpack
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
           
-      - name: Build Docker image cv2
-        id: build-cv2
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ghcr.io/ucsd-ecemae-148/donkeycontainer:cv2
-          platforms: linux/arm64/v8
-          labels: ${{ steps.meta.outputs.labels }}
-          file: Dockerfile.jetpack
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+      # - name: Build Docker image cv2
+      #   id: build-cv2
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     context: .
+      #     push: ${{ github.event_name != 'pull_request' }}
+      #     tags: ghcr.io/ucsd-ecemae-148/donkeycontainer:cv2
+      #     platforms: linux/arm64/v8
+      #     labels: ${{ steps.meta.outputs.labels }}
+      #     file: Dockerfile.jetpack
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
-      - name: Build and push Docker image
+      - name: Build and push Docker final
         id: build-and-push
         uses: docker/build-push-action@v4
         with:
