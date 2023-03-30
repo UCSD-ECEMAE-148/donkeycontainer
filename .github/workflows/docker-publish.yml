@@ -42,7 +42,7 @@ jobs:
           platforms: linux/arm64/v8
         
       - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.7.0
+        uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
@@ -81,6 +81,21 @@ jobs:
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
+      - name: Build Docker image jetpack
+        id: build-jetpack
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ghcr.io/ucsd-ecemae-148/donkeycontainer:jetpack
+          platforms: linux/arm64/v8
+          labels: ${{ steps.meta.outputs.labels }}
+          file: Dockerfile.jetpack
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          
+      # Build and push Docker image with Buildx (don't push on PR)
+      # https://github.com/docker/build-push-action
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v4
@@ -101,10 +116,10 @@ jobs:
       # repository is public to avoid leaking data.  If you would like to publish
       # transparency data even for private images, pass --force to cosign below.
       # https://github.com/sigstore/cosign
-      - name: Sign the published Docker image
-        if: ${{ github.event_name != 'pull_request' }}
-        env:
-          COSIGN_EXPERIMENTAL: "true"
-        # This step uses the identity token to provision an ephemeral certificate
-        # against the sigstore community Fulcio instance.
-        run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
+#       - name: Sign the published Docker image
+#         if: ${{ github.event_name != 'pull_request' }}
+#         env:
+#           COSIGN_EXPERIMENTAL: "true"
+#         # This step uses the identity token to provision an ephemeral certificate
+#         # against the sigstore community Fulcio instance.
+#         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}

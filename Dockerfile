@@ -1,4 +1,4 @@
-FROM base AS jetpack
+FROM ghcr.io/ucsd-ecemae-148/donkeycontainer:jetpack AS jetpack
 
 ############## INSTALL ALL THE DIFFERENT FRAMEWORKs USED IN THE COURSES ##############
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
