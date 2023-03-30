@@ -1,4 +1,4 @@
-FROM ghcr.io/ucsd-ecemae-148/donkeycontainer:jetpack AS jetpack
+FROM ghcr.io/ucsd-ecemae-148/donkeycontainer:cv2 AS cv2
 
 ############## INSTALL ALL THE DIFFERENT FRAMEWORKs USED IN THE COURSES ##############
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
