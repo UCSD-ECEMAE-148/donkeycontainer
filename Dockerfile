@@ -1,6 +1,6 @@
 FROM base AS jetpack
 
-############## INSTALL ALL THE DIFFERENT FRAMEWORK USED IN THE COURSES ##############
+############## INSTALL ALL THE DIFFERENT FRAMEWORKs USED IN THE COURSES ##############
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
     python3-venv \
     python3-dev \
