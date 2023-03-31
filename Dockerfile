@@ -72,13 +72,13 @@ RUN git clone https://github.com/luxonis/depthai.git && \
 RUN echo "export OPENBLAS_CORETYPE=ARMV8" >> ~/.bashrc
 RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | tee /etc/udev/rules.d/80-movidius.rules
 
-# ################ POINTONENAV #################
-RUN mkdir -p ~/.ssh && \
-    ssh-keyscan github.com >> ~/.ssh/known_hosts
+# # ################ POINTONENAV #################
+# RUN mkdir -p ~/.ssh && \
+#     ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-RUN --mount=type=ssh \
-    git clone git@github.com:UCSD-ECEMAE-148/p1_runner.git
-RUN cd p1_runner && source ${VIRTUAL_ENV}/donkey/bin/activate && pip3 install -e .
+# RUN --mount=type=ssh \
+#     git clone git@github.com:UCSD-ECEMAE-148/p1_runner.git
+# RUN cd p1_runner && source ${VIRTUAL_ENV}/donkey/bin/activate && pip3 install -e .
 
 FROM framework AS final
 ################ ADDITIONAL UTILITIES ##################
