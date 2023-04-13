@@ -1,0 +1,45 @@
+FROM ghcr.io/ucsd-ecemae-148/donkeycontainer:utils AS cv2
+
+WORKDIR /projects
+RUN apt-get -y update && apt-get install -y --no-install-recommends \
+    cmake \
+    curl \
+    software-properties-common && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
+
+##### SET LOCALE #####
+RUN locale-gen en_US en_US.UTF-8 &&\
+    update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+RUN echo 'export LANG=en_US.UTF-8' >> ~/.bashrc
+
+############## SETUP SOURCES ##############
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+
+############## INSTALL ROS 2 PACKAGES ##############
+RUN apt-get -y update && apt-get upgrade -y && apt-get install -y \
+    ros-foxy-desktop \
+    python3-argcomplete \
+    ros-dev-tools && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
+
+########### ADD CUSTOM FUNCTIONS ###########
+RUN echo "source_ros2(){ source /opt/ros/foxy/setup.bash; }" >> ~/.bashrc
+
+
+################ LIVOS SDK ################
+RUN git clone https://github.com/Livox-SDK/Livox-SDK2.git && \
+    cd ./Livox-SDK2/  && \
+    mkdir build && \
+    cd build && \
+    cmake .. && make -j"$(nproc)" && \
+    sudo make install
+
+########### LIVOX SDK ROS DRIVER ###########
+RUN git clone https://github.com/Livox-SDK/livox_ros_driver2.git ws_livox/src/livox_ros_driver2
+RUN source /opt/ros/foxy/setup.bash && \
+  cd /projects/ws_livox/src/livox_ros_driver2 && \
+  ./build.sh ROS2

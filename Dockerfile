@@ -1,4 +1,4 @@
-FROM ghcr.io/ucsd-ecemae-148/donkeycontainer:utils AS utils
+FROM ghcr.io/ucsd-ecemae-148/donkeycontainer:ros AS ros
 
 WORKDIR /projects
 
