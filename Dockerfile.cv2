@@ -1,7 +1,7 @@
 FROM ghcr.io/ucsd-ecemae-148/donkeycontainer:jetpack AS jetpack
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG OPENCV_VERSION=4.5.0
+ARG OPENCV_VERSION=4.7.0
 
 RUN apt-get update && apt-get upgrade -y &&\
     # Install build tools, build dependencies and python
@@ -88,6 +88,8 @@ RUN cd /opt/ &&\
     make -j"$(nproc)" && \
     # Install to /usr/local/lib
     make install && \
-    ldconfig
+    ldconfig && \
     # # Remove OpenCV sources and build folder
-    # rm -rf /opt/opencv-${OPENCV_VERSION} && rm -rf /opt/opencv_contrib-${OPENCV_VERSION}
+    rm -rf /opt/opencv-${OPENCV_VERSION} && rm -rf /opt/opencv_contrib-${OPENCV_VERSION}
+
+RUN echo 'export PYTHONPATH=/usr/local/lib/python3.8/site-packages/:$PYTHONPATH' >> ~/.bashrc
