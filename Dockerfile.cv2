@@ -1,4 +1,4 @@
-FROM docker.io/library/jetpack AS jetpack
+FROM ghcr.io/ucsd-ecemae-148/donkeycontainer:jetpack AS jetpack
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG OPENCV_VERSION=4.5.0
