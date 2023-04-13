@@ -12,4 +12,4 @@ docker run \
     --volume='/home/jetson/.Xauthority:/root/.Xauthority:rw' \
     --volume='/tmp/.X11-unix/:/tmp/.X11-unix' \
     --volume='/home/jetson/projects/mycar:/projects/mycar' \
-    docker.io/library/final
+    ghcr.io/ucsd-ecemae-148/donkeycontainer:agx 
