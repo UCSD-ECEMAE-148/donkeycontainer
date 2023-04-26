@@ -26,7 +26,7 @@ RUN apt-get -y update && apt-get upgrade -y && apt-get install -y \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean
 
-################ LIVOS SDK ################
+################ LIVOX SDK ################
 RUN git clone https://github.com/Livox-SDK/Livox-SDK2.git && \
     cd ./Livox-SDK2/  && \
     mkdir build && \

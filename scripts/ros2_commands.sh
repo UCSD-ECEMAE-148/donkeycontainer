@@ -155,6 +155,7 @@ function source_ros2_pkg() {
   source /home/projects/sensor2_ws/src/imu/artemis_openlog/install/setup.bash
   source /home/projects/sensor2_ws/src/vesc/install/setup.bash
   source /home/projects/sensor2_ws/src/lidars/ld06/ros2/install/setup.bash
+  source /home/projects/sensor2_ws/src/lidars/livox/install/setup.bash
   source /home/projects/rosboard_ws/install/setup.bash
 }
 
