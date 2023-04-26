@@ -53,8 +53,10 @@ RUN git clone https://github.com/mmwong920/bounding_box_depthai.git
 RUN mkdir -p /home/projects/mycar
 
 ########### ADD CUSTOM FUNCTIONS ###########
-WORKDIR /home/projects/
+WORKDIR /home/scripts/
 COPY scripts/donkey_commands.sh ./donkey.sh
-RUN ["/bin/bash", "-c", "echo '. /home/projects/donkey.sh' >> /root/.bashrc"]
+RUN ["/bin/bash", "-c", "echo '. /home/scripts/donkey.sh' >> /root/.bashrc"]
+
+WORKDIR /home/projects/
 
 # CMD ["python", "--device-id", "yZ952ezI --polaris 3gGOrFMX --device-port /dev/ttyUSB0"]

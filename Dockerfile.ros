@@ -535,9 +535,9 @@ RUN [\
 # --------------------------------------------------------------------------------------------------------------------------------------------------
 # Place user in projects
 # --------------------------------------------------------------------------------------------------------------------------------------------------
-WORKDIR /home/projects/
+WORKDIR /home/scripts/
 
 ########### ADD CUSTOM FUNCTIONS ###########
 COPY scripts/ros2_commands.sh ./ros.sh
-RUN ["/bin/bash", "-c", "echo '. /home/projects/ros.sh' >> /root/.bashrc"]
+RUN ["/bin/bash", "-c", "echo '. /home/scripts/ros.sh' >> /root/.bashrc"]
 
