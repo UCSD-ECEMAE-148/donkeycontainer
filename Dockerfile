@@ -8,13 +8,10 @@ ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv "${VIRTUAL_ENV}/donkey" --system-site-packages
 
 ######## DONKEYCAR FRAMEWORK ############ 
-RUN git clone https://github.com/UCSD-ECEMAE-148/donkeycar.git -b main && \
+RUN git clone https://github.com/sisaha9/donkeycar.git -b sid_devel && \
     cd donkeycar && \
     source ${VIRTUAL_ENV}/donkey/bin/activate && \
     pip3 install -U --no-cache install -e .[nano]
-
-########### ADD CUSTOM FUNCTIONS ###########
-RUN echo "source_donkey(){ source ${VIRTUAL_ENV}/donkey/bin/activate; }" >> ~/.bashrc
 
 ################ PYVESC ##################
 RUN source ${VIRTUAL_ENV}/donkey/bin/activate && \
@@ -54,5 +51,9 @@ RUN git clone https://github.com/mmwong920/bounding_box_depthai.git
 
 ################ FINAL ##################
 WORKDIR /home/projects//mycar
+
+########### ADD CUSTOM FUNCTIONS ###########
+COPY scripts/donkey_commands.sh ./donkey.sh
+RUN ["/bin/bash", "-c", "echo '. /home/projects/donkey.sh' >> /root/.bashrc"]
 
 # CMD ["python", "--device-id", "yZ952ezI --polaris 3gGOrFMX --device-port /dev/ttyUSB0"]

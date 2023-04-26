@@ -144,6 +144,7 @@ function source_ros1_init() {
 }
 
 function source_ros1() {
+  source /opt/venv/ros/bin/activate
   source_ros1_pkg
   cd /home/projects/ros1_ws
 }
@@ -158,6 +159,7 @@ function source_ros2_pkg() {
 }
 
 function source_ros2() {
+  source /opt/venv/ros/bin/activate
   source_ros2_pkg
   cd /home/projects/ros2_ws
 }

@@ -14,6 +14,11 @@
 # --------------------------------------------------------------------------------------------------------------------------------------------------
 FROM ghcr.io/ucsd-ecemae-148/donkeycontainer:utils
 
+####### CREATE VIRTUAL ENVIRONMENTS #######
+RUN echo "alias python=python3" >> ~/.bashrc
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv "${VIRTUAL_ENV}/ros" --system-site-packages
+
 # --------------------------------------------------------------------------------------------------------------------------------------------------
 # Setup sources.list
 # --------------------------------------------------------------------------------------------------------------------------------------------------
@@ -134,6 +139,7 @@ RUN apt-get update && \
     python3-tk
 
 RUN apt-get update && \
+    source ${VIRTUAL_ENV}/ros/bin/activate && \
     pip3 install \
     pandas \
     control
@@ -169,7 +175,8 @@ WORKDIR /home/projects/sensor1_ws/src/lidars/rplidar
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/noetic/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/noetic/setup.bash && \
     python3 -m pip install --upgrade pip && \
     pip install -U rosdep && rosdep init && \
     rosdep update && rosdep install --from-path src --ignore-src -y && \
@@ -186,7 +193,8 @@ WORKDIR /home/projects/sensor1_ws/src/lidars/ld06
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/noetic/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/noetic/setup.bash && \
     rosdep update && rosdep install --from-path src --ignore-src -y && \
     catkin_make && \
     source devel/setup.bash"\
@@ -249,7 +257,8 @@ WORKDIR /home/projects/sensor2_ws/src/lidars/rplidar
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/foxy/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/foxy/setup.bash && \
     pip install -U colcon-common-extensions && \
     colcon build && \
     source install/setup.bash"\
@@ -264,7 +273,8 @@ WORKDIR /home/projects/sensor2_ws/src/lidars/livox
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/foxy/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/foxy/setup.bash && \
     colcon build && \
     source install/setup.bash"\
     ]
@@ -278,7 +288,8 @@ WORKDIR /home/projects/sensor2_ws/src/lidars/sicktim
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/foxy/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/foxy/setup.bash && \
     colcon build && \
     source install/setup.bash"\
     ]
@@ -292,7 +303,8 @@ WORKDIR /home/projects/sensor2_ws/src/lidars/ld06/ros2
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/foxy/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/foxy/setup.bash && \
     rosdep update && rosdep install --from-path src --ignore-src -y && \
     colcon build && \
     source install/setup.bash"\
@@ -313,7 +325,8 @@ WORKDIR /home/projects/sensor2_ws/src/cameras/oakd
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/foxy/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/foxy/setup.bash && \
     echo 'SUBSYSTEM==\"usb\", ATTRS{idVendor}==\"03e7\", MODE=\"0666\"' | tee /etc/udev/rules.d/80-movidius.rules && \
     # udevadm control --reload-rules && \
     udevadm trigger && \
@@ -333,11 +346,13 @@ RUN [\
 RUN mkdir -p /home/projects/sensor2_ws/src/imu/artemis_openlog/src
 
 RUN apt-get update
-RUN pip3 install attrdict
-RUN pip3 install \
-        transforms3d \
-        vpython \
-        wxPython
+RUN source ${VIRTUAL_ENV}/ros/bin/activate && \
+    pip3 install attrdict
+RUN source ${VIRTUAL_ENV}/ros/bin/activate && \
+    pip3 install \
+    transforms3d \
+    vpython \
+    wxPython
 
 WORKDIR /home/projects/sensor2_ws/src/imu/artemis_openlog/src
 RUN git clone https://github.com/sisaha9/razor_imu_9dof.git
@@ -345,7 +360,8 @@ WORKDIR /home/projects/sensor2_ws/src/imu/artemis_openlog
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/foxy/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/foxy/setup.bash && \
     rosdep update && rosdep install --from-path src --ignore-src -y && \
     colcon build && \
     source install/setup.bash"\
@@ -365,7 +381,8 @@ WORKDIR /home/projects/sensor2_ws/src/gps/ublox
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/foxy/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/foxy/setup.bash && \
     rosdep update && rosdep install --from-path src --ignore-src -y && \
     colcon build && \
     source install/setup.bash"\
@@ -386,7 +403,8 @@ WORKDIR /home/projects/sensor2_ws/src/vesc
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/foxy/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/foxy/setup.bash && \
     rosdep update && rosdep install --from-path src --ignore-src -y && \
     colcon build && \
     source install/setup.bash"\
@@ -398,13 +416,15 @@ RUN [\
 # -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 WORKDIR /  
 RUN apt-get update
-RUN pip3 install git+https://github.com/LiamBindle/PyVESC
+RUN source ${VIRTUAL_ENV}/ros/bin/activate && \
+    pip3 install git+https://github.com/LiamBindle/PyVESC
     
 # -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  
 # Get adafruit servokit (both ROS1 and ROS2 compatiable)
 # -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  
 RUN apt-get update
-RUN pip3 install \
+RUN source ${VIRTUAL_ENV}/ros/bin/activate && \
+    pip3 install \
         adafruit-circuitpython-pca9685 \
         adafruit-circuitpython-servokit \
         Jetson.GPIO && \
@@ -416,14 +436,16 @@ RUN pip3 install \
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - 
 WORKDIR /
 RUN apt-get update
-RUN pip install tornado
+RUN source ${VIRTUAL_ENV}/ros/bin/activate && \
+    pip install tornado
 WORKDIR /home/projects/rosboard_ws/src
 RUN git clone https://github.com/dheera/rosboard.git
 WORKDIR /home/projects/rosboard_ws
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/foxy/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/foxy/setup.bash && \
     rosdep update && rosdep install --from-path src --ignore-src -y && \
     colcon build && \
     source install/setup.bash"\
@@ -446,14 +468,16 @@ RUN git clone https://github.com/f1tenth/f1tenth_gym.git
 RUN git clone https://github.com/f1tenth/f1tenth_gym_ros.git
 
 WORKDIR /home/projects/sim2_ws/src/f1tenth_gym
-RUN pip3 install -e .
+RUN source ${VIRTUAL_ENV}/ros/bin/activate && \
+    pip3 install -e .
 WORKDIR /home/projects/sim2_ws
 
 
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/foxy/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/foxy/setup.bash && \
     rosdep update && rosdep install --from-path src --ignore-src -y && \
     colcon build && \
     source install/setup.bash"\
@@ -479,7 +503,8 @@ WORKDIR /home/projects/ros1_ws
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/noetic/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/noetic/setup.bash && \
     catkin_make && \
     source devel/setup.bash"\
     ]
@@ -497,7 +522,8 @@ WORKDIR /home/projects/ros2_ws
 RUN [\
     "/bin/bash", \
     "-c", \
-    "source /opt/ros/foxy/setup.bash && \
+    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+    source /opt/ros/foxy/setup.bash && \
     colcon build && \
     source install/setup.bash"\
     ]
@@ -512,6 +538,6 @@ RUN [\
 WORKDIR /home/projects/
 
 ########### ADD CUSTOM FUNCTIONS ###########
-COPY ros2_commands.sh ./functions.sh
-RUN ["/bin/bash", "-c", "echo '. ./functions.sh' >> /root/.bashrc"]
+COPY scripts/ros2_commands.sh ./ros.sh
+RUN ["/bin/bash", "-c", "echo '. /home/projects/ros.sh' >> /root/.bashrc"]
 
