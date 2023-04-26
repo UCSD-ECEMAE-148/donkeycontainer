@@ -1,6 +1,6 @@
 FROM ghcr.io/ucsd-ecemae-148/donkeycontainer:ros AS ros
 
-WORKDIR /projects
+WORKDIR /home/projects/
 
 ####### CREATE VIRTUAL ENVIRONMENTS #######
 RUN echo "alias python=python3" >> ~/.bashrc
@@ -21,7 +21,7 @@ RUN source ${VIRTUAL_ENV}/donkey/bin/activate && \
     pip3 install --no-cache git+https://github.com/UCSD-ECEMAE-148/PyVESC.git@master
 
 ################ DEPTHAI ##################
-WORKDIR /projects
+WORKDIR /home/projects/
 RUN git clone https://github.com/luxonis/depthai.git && \
     git clone https://github.com/luxonis/depthai-python.git && \
     cd depthai && \
@@ -53,6 +53,6 @@ RUN source ${VIRTUAL_ENV}/donkey/bin/activate && pip3 install -U --no-cache inst
 RUN git clone https://github.com/mmwong920/bounding_box_depthai.git
 
 ################ FINAL ##################
-WORKDIR /projects/mycar
+WORKDIR /home/projects//mycar
 
 # CMD ["python", "--device-id", "yZ952ezI --polaris 3gGOrFMX --device-port /dev/ttyUSB0"]

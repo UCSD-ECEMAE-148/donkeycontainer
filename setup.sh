@@ -11,7 +11,7 @@ donkey_setup(){
       --device /dev/video0 \
       --volume="$HOME/.Xauthority:/ root/.Xauthority:rw" \
       --volume="/tmp/.X11-unix/:/tmp/.X11-unix"
-      --volume="$HOME/projects/mycar:/donkeycar/mycar" \
+      --volume="$HOME/projects/mycar:/home/projects/mycar" \
       mdlopezme/ucsdrobocar:jetson
 }
 donkey_start(){
