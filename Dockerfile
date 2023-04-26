@@ -50,9 +50,9 @@ RUN source ${VIRTUAL_ENV}/donkey/bin/activate && pip3 install -U --no-cache inst
 RUN git clone https://github.com/mmwong920/bounding_box_depthai.git
 
 ################ FINAL ##################
-WORKDIR /home/projects//mycar
 
 ########### ADD CUSTOM FUNCTIONS ###########
+WORKDIR /home/projects/
 COPY scripts/donkey_commands.sh ./donkey.sh
 RUN ["/bin/bash", "-c", "echo '. /home/projects/donkey.sh' >> /root/.bashrc"]
 
