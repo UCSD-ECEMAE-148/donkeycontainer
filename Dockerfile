@@ -30,12 +30,9 @@ RUN git clone https://github.com/luxonis/depthai.git && \
 RUN echo "export OPENBLAS_CORETYPE=ARMV8" >> ~/.bashrc
 RUN echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="03e7", MODE="0666"' | tee /etc/udev/rules.d/80-movidius.rules
 
-# # ################ POINTONENAV #################
-# RUN mkdir -p ~/.ssh && \
-#     ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-RUN git clone https://github.com/UCSD-ECEMAE-148/p2_runner.git p1_runner
-RUN cd p1_runner && source ${VIRTUAL_ENV}/donkey/bin/activate && pip3 install -e .
+################ POINTONENAV #################
+RUN git clone https://github.com/PointOneNav/fusion-engine-client.git
+RUN cd fusion-engine-client/python && source ${VIRTUAL_ENV}/donkey/bin/activate && pip3 install -e .
 
 ################ ADDITIONAL UTILITIES ##################
 RUN apt-get -y update && apt-get install -y \
