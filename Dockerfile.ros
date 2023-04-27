@@ -267,17 +267,33 @@ RUN [\
 # -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  
 # Get livox --ROS2
 # -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  
+# WORKDIR /home/projects/sensor2_ws/src/lidars/livox/src
+# RUN git clone https://github.com/Livox-SDK/livox_ros2_driver.git
+# WORKDIR /home/projects/sensor2_ws/src/lidars/livox
+# RUN [\
+#     "/bin/bash", \
+#     "-c", \
+#     "source ${VIRTUAL_ENV}/ros/bin/activate && \
+#     source /opt/ros/foxy/setup.bash && \
+#     colcon build && \
+#     source install/setup.bash"\
+#     ]
+
+################ LIVOX SDK ################
 WORKDIR /home/projects/sensor2_ws/src/lidars/livox/src
-RUN git clone https://github.com/Livox-SDK/livox_ros2_driver.git
-WORKDIR /home/projects/sensor2_ws/src/lidars/livox
-RUN [\
-    "/bin/bash", \
-    "-c", \
-    "source ${VIRTUAL_ENV}/ros/bin/activate && \
+RUN git clone https://github.com/Livox-SDK/Livox-SDK2.git && \
+    cd ./Livox-SDK2/  && \
+    mkdir build && \
+    cd build && \
+    cmake .. && make -j"$(nproc)" && \
+    sudo make install
+
+########### LIVOX SDK ROS DRIVER ###########
+RUN git clone https://github.com/Livox-SDK/livox_ros_driver2.git
+RUN source ${VIRTUAL_ENV}/ros/bin/activate && \
     source /opt/ros/foxy/setup.bash && \
-    colcon build && \
-    source install/setup.bash"\
-    ]
+    cd ./livox_ros_driver2 && \
+    ./build.sh ROS2
 
 # -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  
 # Get SickTim5xx --ROS2

@@ -38,11 +38,12 @@ RUN git clone https://github.com/UCSD-ECEMAE-148/p2_runner.git p1_runner
 RUN cd p1_runner && source ${VIRTUAL_ENV}/donkey/bin/activate && pip3 install -e .
 
 ################ ADDITIONAL UTILITIES ##################
-RUN apt-get -y update && apt-get install -y --no-install-recommends \
+RUN apt-get -y update && apt-get install -y \
     vim \
     nano \
     jstest-gtk \
-    x11-apps &&\
+    x11-apps \
+    python3-argcomplete && \
     rm -rf /var/lib/apt/lists/* && apt-get clean
 
 ################ DATA SCIENCE TOOLS ################
@@ -51,6 +52,7 @@ RUN git clone https://github.com/mmwong920/bounding_box_depthai.git
 
 ################ FINAL ##################
 RUN mkdir -p /home/projects/mycar
+RUN mkdir -p /root/.config
 
 ########### ADD CUSTOM FUNCTIONS ###########
 WORKDIR /home/scripts/
