@@ -35,15 +35,18 @@ RUN git clone https://github.com/PointOneNav/fusion-engine-client.git
 RUN cd fusion-engine-client/python && source ${VIRTUAL_ENV}/donkey/bin/activate && pip3 install -e .
 
 ################ ADDITIONAL UTILITIES ##################
-RUN apt-get -y update && apt-get install -y \
+RUN echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-set-selections
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && apt-get install -y \
     vim \
     nano \
     jstest-gtk \
     x11-apps \
+    wireshark \
     python3-argcomplete && \
     rm -rf /var/lib/apt/lists/* && apt-get clean
 
 ################ DATA SCIENCE TOOLS ################
+RUN source ${VIRTUAL_ENV}/ros/bin/activate && pip3 install -U --no-cache install inputs
 RUN source ${VIRTUAL_ENV}/donkey/bin/activate && pip3 install -U --no-cache install seaborn pandas tqdm
 RUN git clone https://github.com/mmwong920/bounding_box_depthai.git
 
@@ -55,6 +58,10 @@ RUN mkdir -p /root/.config
 WORKDIR /home/scripts/
 COPY scripts/donkey_commands.sh ./donkey.sh
 RUN ["/bin/bash", "-c", "echo '. /home/scripts/donkey.sh' >> /root/.bashrc"]
+
+########### ADD CUSTOM FUNCTIONS ###########
+COPY scripts/ros2_commands.sh ./ros.sh
+RUN ["/bin/bash", "-c", "echo '. /home/scripts/ros.sh' >> /root/.bashrc"]
 
 WORKDIR /home/projects/
 

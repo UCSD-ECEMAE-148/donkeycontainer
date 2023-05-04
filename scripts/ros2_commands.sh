@@ -159,10 +159,27 @@ function source_ros2_pkg() {
   source /home/projects/rosboard_ws/install/setup.bash
 }
 
+function download_ucsd_robocar_framework(){
+  mkdir -p /home/projects/ros2_ws/src
+  cd /home/projects/ros2_ws/src
+  git clone https://gitlab.com/ucsd_robocar2/ucsd_robocar_hub2.git && \
+    cd ucsd_robocar_hub2 && \
+    git submodule init && \
+    git submodule update --remote --merge
+  cd /home/projects/ros2_ws
+}
+
+function source_ros2_simple(){
+  source /opt/venv/ros/bin/activate
+  source /opt/ros/foxy/setup.bash
+  source /home/projects/ros2_simple_ws/install/setup.bash
+}
+
 function source_ros2() {
   source /opt/venv/ros/bin/activate
   source_ros2_pkg
   cd /home/projects/ros2_ws
+  source install/setup.bash
 }
 
 function build_ros2() {

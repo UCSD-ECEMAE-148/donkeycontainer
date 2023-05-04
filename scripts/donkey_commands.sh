@@ -3,6 +3,8 @@ function source_donkey(){
     cd /home/projects/mycar
 }
 
+export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1 # HACK to cannot load static memory
+
 clear
 echo "Virtual Environments available:
     1) ROS:         source_ros1

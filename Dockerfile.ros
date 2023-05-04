@@ -90,6 +90,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-foxy-ackermann-msgs \
     ros-foxy-serial-driver \
     ros-foxy-depthai-ros \
+    ros-foxy-pcl-ros \
     && rm -rf /var/lib/apt/lists/*
 
 # Not sure if these are needed...
@@ -551,9 +552,3 @@ RUN [\
 # --------------------------------------------------------------------------------------------------------------------------------------------------
 # Place user in projects
 # --------------------------------------------------------------------------------------------------------------------------------------------------
-WORKDIR /home/scripts/
-
-########### ADD CUSTOM FUNCTIONS ###########
-COPY scripts/ros2_commands.sh ./ros.sh
-RUN ["/bin/bash", "-c", "echo '. /home/scripts/ros.sh' >> /root/.bashrc"]
-
