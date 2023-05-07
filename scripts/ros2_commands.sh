@@ -144,7 +144,11 @@ function source_ros1_init() {
 }
 
 function source_ros1() {
-  source /opt/venv/ros/bin/activate
+  if [ ! -d "/home/projects/ros1_ws/src" ] 
+  then
+      download_ros1
+  fi
+  source /opt/venv/ros1/bin/activate
   source_ros1_pkg
   cd /home/projects/ros1_ws
 }
@@ -154,31 +158,26 @@ function source_ros2_pkg() {
   source /home/projects/sensor2_ws/src/cameras/oakd/install/setup.bash
   source /home/projects/sensor2_ws/src/imu/artemis_openlog/install/setup.bash
   source /home/projects/sensor2_ws/src/vesc/install/setup.bash
-  source /home/projects/sensor2_ws/src/lidars/ld06/ros2/install/setup.bash
+  source /home/projects/sensor2_ws/src/lidars/ld06/install/setup.bash
   source /home/projects/sensor2_ws/src/lidars/livox/install/setup.bash
   source /home/projects/rosboard_ws/install/setup.bash
 }
 
-function download_ucsd_robocar_framework(){
-  mkdir -p /home/projects/ros2_ws/src
-  cd /home/projects/ros2_ws/src
-  git clone https://gitlab.com/ucsd_robocar2/ucsd_robocar_hub2.git && \
-    cd ucsd_robocar_hub2 && \
-    git submodule init && \
-    git submodule update --remote --merge
-  cd /home/projects/ros2_ws
-}
-
 function source_ros2_simple(){
-  source /opt/venv/ros/bin/activate
+  source /opt/venv/ros2/bin/activate
   source /opt/ros/foxy/setup.bash
   source /home/projects/ros2_simple_ws/install/setup.bash
 }
 
 function source_ros2() {
-  source /opt/venv/ros/bin/activate
+  if [ ! -d "/home/projects/ros2_ws/src" ] 
+  then
+      download_ros2
+  fi
+  source /opt/venv/ros2/bin/activate
   source_ros2_pkg
   cd /home/projects/ros2_ws
+  build_ros2
   source install/setup.bash
 }
 
@@ -203,3 +202,31 @@ function upd_ucsd_robocar() {
 }
 
 export ROS_DOMAIN_ID=96
+
+function download_ros2(){
+  mkdir -p /home/projects/ros2_ws/src
+  cd /home/projects/ros2_ws/src
+  git clone https://gitlab.com/ucsd_robocar2/ucsd_robocar_hub2.git && \
+  cd ucsd_robocar_hub2 && \
+  git submodule init && \
+  git submodule update --remote --merge && \
+  cd /home/projects/ros2_ws && \
+  source /opt/venv/ros2/bin/activate && \
+  source /opt/ros/foxy/setup.bash && \
+  colcon build && \
+  source install/setup.bash
+}
+
+function download_ros1(){
+  mkdir -p /home/projects/ros1_ws/src
+  cd /home/projects/ros1_ws/src
+  git clone https://gitlab.com/ucsd_robocar/ucsd_robocar_hub1.git && \
+  cd ucsd_robocar_hub1 && \
+  git submodule init && \
+  git submodule update --remote --merge && \
+  cd /home/projects/ros1_ws && \
+  source /opt/venv/ros1/bin/activate && \
+  source /opt/ros/noetic/setup.bash && \
+  catkin_make && \
+  source devel/setup.bash   
+}
