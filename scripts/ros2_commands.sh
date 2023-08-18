@@ -160,6 +160,8 @@ function source_ros2_pkg() {
   source /home/projects/sensor2_ws/src/vesc/install/setup.bash
   source /home/projects/sensor2_ws/src/lidars/ld06/install/setup.bash
   source /home/projects/sensor2_ws/src/lidars/livox/install/setup.bash
+  source /home/projects/sensor2_ws/src/gps/point_one_gps_driver/install/local_setup.bash
+  source /home/projects/sensor2_ws/src/lidars/livox/install/setup.bash
   source /home/projects/rosboard_ws/install/setup.bash
 }
 
@@ -177,7 +179,10 @@ function source_ros2() {
   source /opt/venv/ros2/bin/activate
   source_ros2_pkg
   cd /home/projects/ros2_ws
-  build_ros2
+  if [ ! -d "/home/projects/ros2_ws/install" ]
+  then
+      build_ros2
+  fi
   source install/setup.bash
 }
 
@@ -229,4 +234,11 @@ function download_ros1(){
   source /opt/ros/noetic/setup.bash && \
   catkin_make && \
   source devel/setup.bash   
+}
+
+function build_fusion_ros2(){
+  cd /home/projects/sensor2_ws/src/gps/point_one_gps_driver && \
+  rm -rf build/ install/ log/ && \
+  colcon build && \
+  source_ros2_pkg
 }

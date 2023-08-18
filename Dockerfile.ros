@@ -59,6 +59,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-foxy-serial-driver \
     ros-foxy-depthai-ros \
     ros-foxy-pcl-ros \
+    ros-foxy-gps-msgs \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 

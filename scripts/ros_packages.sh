@@ -28,6 +28,9 @@ function installRos2Package () {
 }
 
 ########### ROS2 Packages ###########
+# ROS2|POINTONEGPS|SIDGOD
+installRos2Package /home/projects/sensor2_ws/src/gps/point_one_gps_driver https://github.com/airacingtech/fusion_engine_ros_driver.git -b master 
+
 # ROS2|LIDAR|RPLidar
 installRos2Package /home/projects/sensor2_ws/src/lidars/rplidar https://github.com/CreedyNZ/rplidar_ros2.git --branch ros2
 

@@ -3,6 +3,15 @@ function source_donkey(){
     cd /home/projects/mycar
 }
 
+function source_p1_tools(){
+    source /opt/venv/p1_runner/bin/activate
+    cd /home/projects/p1-host-tools/bin
+}
+
+function get_line_follower(){
+    git clone https://github.com/UCSD-ECEMAE-148/simple-line-follower.git
+}
+
 
 function helpme(){
     echo "
@@ -56,6 +65,7 @@ echo "Virtual Environments available:
     1) ROS:         source_ros1
     2) ROS2:        source_ros2
     3) Donkeycar:   source_donkey
+    4) p1_tools:    source_p1_tools
     4) Help:        helpme
     5) Exit:        exit
 "
