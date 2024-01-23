@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/l4t-base:r36.2.0 as base
+FROM nvcr.io/nvidia/l4t-base:35.4.1 as base
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -21,11 +21,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
-# Install nvidia-opencv-dev for OpenCV developer packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    nvidia-opencv-dev \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
+# # Install nvidia-opencv-dev for OpenCV developer packages, WILL COMPILE FROM SOURCE
+# RUN apt-get update && apt-get install -y --no-install-recommends \
+#     nvidia-opencv-dev \
+#     && rm -rf /var/lib/apt/lists/* \
+#     && apt-get clean
 
 # Install Multimedia API samples & libs
 RUN apt-get update && apt-get download nvidia-l4t-jetson-multimedia-api \

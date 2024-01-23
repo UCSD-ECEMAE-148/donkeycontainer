@@ -1,7 +1,7 @@
-FROM ghcr.io/ucsd-ecemae-148/donkeycontainer:jetpack AS jetpack
+FROM ghcr.io/ucsd-ecemae-148/donkeycontainer:jetpack512 AS jetpack
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG OPENCV_VERSION=4.7.0
+ARG OPENCV_VERSION=4.9.0
 
 RUN apt-get update && apt-get upgrade -y &&\
     # Install build tools, build dependencies and python
@@ -57,7 +57,7 @@ RUN cd /opt/ &&\
         -D EIGEN_INCLUDE_PATH=/usr/include/eigen3 \
         -D WITH_OPENCL=OFF \
         -D WITH_CUDA=ON \
-        -D CUDA_ARCH_BIN=5.3,6.2,7.2,8.7,7.5,8.0,8.6 \
+        -D CUDA_ARCH_BIN= 5.0,7.2,8.7 \
         -D CUDA_ARCH_PTX="" \
         -D WITH_CUDNN=ON \
         -D WITH_CUBLAS=ON \

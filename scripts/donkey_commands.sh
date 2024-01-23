@@ -1,6 +1,13 @@
 function source_donkey(){ 
     source /opt/venv/donkey/bin/activate
-    cd /home/projects/mycar
+    cd /home/projects/mycars
+    if [ -z "$(ls -A .)" ]; then
+    donkey createcar --path=./myfirstcar
+    echo "This is your first time here... Default vehicle was generated. 'ls' to see list of vehicles"
+    else
+    echo 'Welcome back :)'
+    fi
+
 }
 
 function source_p1_tools(){
@@ -62,10 +69,8 @@ export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1 # HACK to cannot load 
 
 clear
 echo "Virtual Environments available:
-    1) ROS:         source_ros1
-    2) ROS2:        source_ros2
-    3) Donkeycar:   source_donkey
-    4) p1_tools:    source_p1_tools
-    4) Help:        helpme
-    5) Exit:        exit
+    1) Donkeycar:   source_donkey
+    2) p1_tools:    source_p1_tools
+    3) Help:        helpme
+    4) Exit:        exit
 "
