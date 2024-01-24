@@ -1,4 +1,5 @@
-nvidia-docker run \
+docker run \
+    --runtime nvidia \
     --name donkey\
     -it\
     --rm \
