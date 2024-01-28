@@ -1,0 +1,137 @@
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+# Getting Base image (ubuntu 20.04)
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+FROM ghcr.io/ucsd-ecemae-148/donkeycontainer:utils
+
+####### CREATE VIRTUAL ENVIRONMENTS #######
+RUN echo "alias python=python3" >> ~/.bashrc
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv "${VIRTUAL_ENV}/ros" --system-site-packages
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+# Setup sources.list
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+RUN apt update && sudo apt install curl -y
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+RUN echo "deb http://packages.ros.org/ros/ubuntu focal main" > /etc/apt/sources.list.d/ros1-latest.list
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+# Setting environment variable
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+ENV ROS2_DISTRO foxy
+
+####################################################################################################################################################
+# Install required packages/dependencies for ros1 and ros2
+####################################################################################################################################################
+#
+#
+
+WORKDIR /
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+# intel debian packages
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libssl-dev \
+    libusb-1.0-0-dev \
+    pkg-config \
+    libgtk-3-dev \
+    libglfw3-dev \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
+    libssl-dev \
+    libusb-1.0-0-dev \
+    pkg-config \
+    libgtk-3-dev \
+    libglfw3-dev \
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+# intel debian packages
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libssl-dev \
+    libusb-1.0-0-dev \
+    pkg-config \
+    libgtk-3-dev \
+    libglfw3-dev \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
+    libssl-dev \
+    libusb-1.0-0-dev \
+    pkg-config \
+    libgtk-3-dev \
+    libglfw3-dev \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
+    build-essential \
+    libgtk-3-dev \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
+    build-essential \
+    libgtk-3-dev
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+# install ros2 packages
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-foxy-desktop=0.9.2-1* \
+    ros-foxy-ros1-bridge \
+    ros-foxy-realsense2-camera \
+    ros-foxy-realsense2-camera-msgs \
+    ros-foxy-librealsense2 \ 
+    ros-foxy-message-filters \
+    ros-foxy-image-transport \
+    ros-foxy-sick-scan2 \
+    ros-foxy-teleop-twist-joy \
+    ros-foxy-joy \
+    ros-foxy-joy-teleop \
+    ros-foxy-rviz-default-plugins \
+    ros-foxy-rviz-rendering \
+    ros-foxy-ros2bag \
+    ros-foxy-rosbag2-converter-default-plugins \
+    ros-foxy-rosbag2-storage-default-plugins \
+    ros-foxy-robot-localization \
+    ros-foxy-slam-toolbox \
+    ros-foxy-ackermann-msgs \
+    ros-foxy-serial-driver \
+    ros-foxy-depthai-ros \
+    ros-foxy-pcl-ros \
+    && rm -rf /var/lib/apt/lists/*# --------------------------------------------------------------------------------------------------------------------------------------------------
+# install useful packages
+
+# Not sure if these are needed...
+#    ros-foxy-rviz2 \
+#    ros-foxy-rviz-common \
+#    ros-foxy-realsense2-camera-description \
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+# install useful packages
+# --------------------------------------------------------------------------------------------------------------------------------------------------
+WORKDIR /
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    python3-pip \
+    python3-dev \
+    nano \
+    iputils-ping \
+    x11-apps \
+    nautilus \
+    firefox \
+    git-all \
+    cheese \
+    jstest-gtk \
+    joystick \
+    gedit \
+    gedit-plugin-multi-edit \
+    gedit-plugins \
+    python3-tk
+
+RUN apt-get update && \
+    source ${VIRTUAL_ENV}/ros/bin/activate && \
+    pip3 install \
+    pandas \
+    control
+
