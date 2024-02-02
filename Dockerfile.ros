@@ -125,3 +125,5 @@ RUN apt-get update && \
 
 RUN export ROS_DISTRO=foxy
 RUN echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc
+
+RUN rosdep init
