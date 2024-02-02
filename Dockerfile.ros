@@ -101,6 +101,8 @@ RUN apt-get update && \
     x11-apps \
     nautilus \
     vim \
+    tmux \
+    tmuxp \
     firefox \
     git-all \
     cheese \
